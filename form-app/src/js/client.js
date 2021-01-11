@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Layout from "./pages/Layout";
+import UserInfo from "./pages/UserInfo";
 
 const app = document.getElementById('app');
 
-ReactDOM.render(<Layout />, app);
+ReactDOM.render(<UserInfo />, app);
 
