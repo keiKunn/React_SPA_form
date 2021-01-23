@@ -1,9 +1,21 @@
 import React from "react";
+import Layout from "./Layout";
 
 export default class Consultation extends React.Component {
   render() {
     return (
-      <h1>Consultation.js</h1>
+      <div>
+        <div>
+          STEP3
+          <p>ご相談内容をご記入ください</p>
+        </div>
+        <div>
+          -- ご相談内容 --
+        </div>
+        <textarea>
+        </textarea>
+        <Layout nextPage="/" backPage="/Questions" />
+      </div>
     );
   }
 }

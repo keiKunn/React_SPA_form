@@ -1,4 +1,5 @@
 import React from "react";
+import Layout from "./Layout";
 
 export default class UserInfo extends React.Component {
   constructor(props) {
@@ -27,64 +28,49 @@ export default class UserInfo extends React.Component {
       selectMonth,
       selectDay
     };
+
+    //this.changeRadioBtn = this.changeRadioBtn.bind(this);
   }
 
- /**
-  *  ラジオボタン選択
-  */
- changeRadioBtn = (e) => {
-  const choicedBtn = e.target.value;
-  // 表示切替
-  let radioBtnState;
-  if (choicedBtn === 'men') {
-    radioBtnState = '男性';
-  } else if (choicedBtn === 'women') {
-    radioBtnState = '女性';
+  /**
+   *  ラジオボタン選択
+   */
+  changeRadioBtn = (e) => {
+    const choicedBtn = e.target.value;
+    // 表示切替
+    let radioBtnState;
+    if (choicedBtn === 'men') {
+      radioBtnState = '男性';
+    } else if (choicedBtn === 'women') {
+      radioBtnState = '女性';
+    }
+    // 表示タスクをset
+    this.setState({ radioBtnSex: radioBtnState });
   }
-  // 表示タスクをset
-  this.setState({ radioBtnSex: radioBtnState });
-}
 
-  //   /**
-  //   * 月が変わったら日のoption要素の値を変える
-  //   *
-  //   * @param int el userBirthdayMonth
-  //   */
-  // function createDaysForOptions(el) {
-  //   const indexKey = el.selectedIndex;
-  //   const mouth = {
-  //     1: 31, 2: 29, 3: 31, 4: 30,
-  //     5: 31, 6: 30, 7: 31, 8: 31,
-  //     9: 30, 10: 31, 11: 30, 12: 31,
-  //   }
+  handleMonthChange = (e) => {
+    const monthKey = e.target.value;
+    const month = {
+      1: 31, 2: 29, 3: 31, 4: 30,
+      5: 31, 6: 30, 7: 31, 8: 31,
+      9: 30, 10: 31, 11: 30, 12: 31,
+    }
 
-  //   // 要素がずれるので+1をする
-  //   return mouth[indexKey + 1];
-  // }
-
-  // /**
-  //  * 月が変わったら日のoption要素の値を変える
-  //  *
-  //  * @param int el userBirthdayMonth
-  //  */
-  // function createDaysForOptions(el) {
-  //   const indexKey = el.selectedIndex;
-  //   const mouth = {
-  //     1: 31, 2: 29, 3: 31, 4: 30,
-  //     5: 31, 6: 30, 7: 31, 8: 31,
-  //     9: 30, 10: 31, 11: 30, 12: 31,
-  //   }
-
-  //   // 要素がずれるので+1をする
-  //   return mouth[indexKey + 1];
-  // }
+    // 選択された月の日数を取得
+    const newDays = month[monthKey];
+    const selectDay = []; 
+    // 日数を新しくセット
+    for (let i = 1; i <= newDays; i++) {
+      selectDay.push(i);
+    }
+    this.setState({selectDay});
+  }
 
   render() {
-    const radioBtnSex =this.state.radioBtnSex;
+    const radioBtnSex = this.state.radioBtnSex;
     const selectYear = this.state.selectYear;
     const selectMonth = this.state.selectMonth;
     const selectDay = this.state.selectDay;
-    console.log("render");
 
     return (
       <div>
@@ -101,26 +87,26 @@ export default class UserInfo extends React.Component {
 
           <p>-生年月日-</p>
           <div className="form-select-box">
-            <div className="form-select">
+            <span className="form-select">
               <select className="birthday-year dropdown-toggle">
                 {/*1930-2021まで */}
                 {
                   selectYear.map((year, index) => {
-                    if(year === 1990){
+                    if (year === 1990) {
                       // 初期値設定
                       return <option key={index} value={year} selected>{year} 年</option>
                     }
-                    return <option  key={index} value={year}>{year} 年</option>
+                    return <option key={index} value={year}>{year} 年</option>
                   })
                 }
               </select>
-            </div>
+            </span>
             /
-            <div className="form-select">
-              <select className="birthday-month dropdown-toggle">
+            <span className="form-select">
+              <select className="birthday-month dropdown-toggle" onChange={this.handleMonthChange}>
                 {/*1-12まで */}{
                   selectMonth.map((month, index) => {
-                    if(month === 1){
+                    if (month === 1) {
                       // 初期値設定
                       return <option key={index} value={month} selected>{month} 月</option>
                     }
@@ -128,22 +114,23 @@ export default class UserInfo extends React.Component {
                   })
                 }
               </select>
-            </div>
+            </span>
             /
-            <div className="form-select">
+            <span className="form-select">
               <select className="birthday-day dropdown-toggle">
                 {/*1-31まで */}
                 {
                   selectDay.map((day, index) => {
-                    if(day === 1){
+                    if (day === 1) {
                       // 初期値設定
-                      return <option  key={index} value={day} selected>{day} 日</option>
+                      return <option key={index} value={day} selected>{day} 日</option>
                     }
-                    return <option  key={index} value={day}>{day} 日</option>
+                    return <option key={index} value={day}>{day} 日</option>
                   })
                 }
               </select>
-            </div>
+            </span>
+            <Layout nextPage="/Questions" />
           </div>
         </div>
       </div>
