@@ -1,5 +1,6 @@
 import React from "react";
-import Layout from "./Layout";
+import LinkSetting from "../components/LinkSetting";
+import TitleArea from "../components/TitleArea";
 
 export default class Questions extends React.Component {
   constructor(props) {
@@ -76,10 +77,7 @@ export default class Questions extends React.Component {
     const displayQuestions = this.state.displayQuestions;
     return (
       <div>
-        <div>
-          STEP2
-          <p>以下にお答えください</p>
-        </div>
+        <TitleArea stepNumber="STEP2" titleText="以下にお答えください" />
         {
           displayQuestions.map((displayQuestion, i) => {
             return <div>
@@ -95,7 +93,7 @@ export default class Questions extends React.Component {
             </div>
           })
         }
-        <Layout backPage="/" nextPage="/Consultation"/>
+        <LinkSetting backPage="/" nextPage="/Consultation"/>
       </div>
     );
   }

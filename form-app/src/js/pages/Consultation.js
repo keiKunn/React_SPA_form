@@ -1,20 +1,18 @@
 import React from "react";
-import Layout from "./Layout";
+import LinkSetting from "../components/LinkSetting";
+import TitleArea from "../components/TitleArea";
 
 export default class Consultation extends React.Component {
   render() {
     return (
       <div>
-        <div>
-          STEP3
-          <p>ご相談内容をご記入ください</p>
-        </div>
+        <TitleArea stepNumber="STEP3" titleText="ご相談内容をご記入ください" />
         <div>
           -- ご相談内容 --
         </div>
         <textarea>
         </textarea>
-        <Layout nextPage="/" backPage="/Questions" />
+        <LinkSetting nextPage="/" backPage="/Questions" />
       </div>
     );
   }

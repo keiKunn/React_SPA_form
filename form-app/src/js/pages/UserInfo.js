@@ -1,35 +1,17 @@
 import React from "react";
-import Layout from "./Layout";
+import LinkSetting from "../components/LinkSetting";
+import TitleArea from "../components/TitleArea";
+import { SelectYear, SelectMonth, SelectDay } from "../define/SelectBirthDay";
 
 export default class UserInfo extends React.Component {
   constructor(props) {
     super(props);
-
-    const selectYear = [];
-    const selectMonth = [];
-    const selectDay = [];
-
-    // 年：1930年代から2021年代までを設定
-    for (let i = 1930; i <= 2021; i++) {
-      selectYear.push(i);
-    }
-    // 月
-    for (let i = 1; i <= 12; i++) {
-      selectMonth.push(i);
-    }
-    // 日
-    for (let i = 1; i <= 31; i++) {
-      selectDay.push(i);
-    }
-
     this.state = {
       radioBtnSex: '',
-      selectYear,
-      selectMonth,
-      selectDay
+      selectYear: SelectYear,
+      selectMonth: SelectMonth,
+      selectDay: SelectDay
     };
-
-    //this.changeRadioBtn = this.changeRadioBtn.bind(this);
   }
 
   /**
@@ -58,12 +40,12 @@ export default class UserInfo extends React.Component {
 
     // 選択された月の日数を取得
     const newDays = month[monthKey];
-    const selectDay = []; 
+    const selectDay = [];
     // 日数を新しくセット
     for (let i = 1; i <= newDays; i++) {
       selectDay.push(i);
     }
-    this.setState({selectDay});
+    this.setState({ selectDay });
   }
 
   render() {
@@ -74,10 +56,7 @@ export default class UserInfo extends React.Component {
 
     return (
       <div>
-        <div>
-          STEP1
-          <p>お客様の情報を入力してください</p>
-        </div>
+        <TitleArea stepNumber="STEP1" titleText="お客様の情報を入力してください" />
         <div>
           <p>-性別-</p>
           <input type="radio" id="radio-men-id" name="sex" value="men" checked={radioBtnSex === '男性'} onChange={this.changeRadioBtn} />
@@ -88,28 +67,20 @@ export default class UserInfo extends React.Component {
           <p>-生年月日-</p>
           <div className="form-select-box">
             <span className="form-select">
-              <select className="birthday-year dropdown-toggle">
+              <select className="birthday-year dropdown-toggle" defaultValue="1930">
                 {/*1930-2021まで */}
                 {
                   selectYear.map((year, index) => {
-                    if (year === 1990) {
-                      // 初期値設定
-                      return <option key={index} value={year} selected>{year} 年</option>
-                    }
-                    return <option key={index} value={year}>{year} 年</option>
+                    return <option key={index}  value={year}>{year} 年</option>
                   })
                 }
               </select>
             </span>
             /
             <span className="form-select">
-              <select className="birthday-month dropdown-toggle" onChange={this.handleMonthChange}>
+              <select className="birthday-month dropdown-toggle" defaultValue="1" onChange={this.handleMonthChange}>
                 {/*1-12まで */}{
                   selectMonth.map((month, index) => {
-                    if (month === 1) {
-                      // 初期値設定
-                      return <option key={index} value={month} selected>{month} 月</option>
-                    }
                     return <option key={index} value={month}>{month} 月</option>
                   })
                 }
@@ -117,20 +88,16 @@ export default class UserInfo extends React.Component {
             </span>
             /
             <span className="form-select">
-              <select className="birthday-day dropdown-toggle">
+              <select className="birthday-day dropdown-toggle" defaultValue="1">
                 {/*1-31まで */}
                 {
                   selectDay.map((day, index) => {
-                    if (day === 1) {
-                      // 初期値設定
-                      return <option key={index} value={day} selected>{day} 日</option>
-                    }
                     return <option key={index} value={day}>{day} 日</option>
                   })
                 }
               </select>
             </span>
-            <Layout nextPage="/Questions" />
+            <LinkSetting nextPage="/Questions" />
           </div>
         </div>
       </div>
