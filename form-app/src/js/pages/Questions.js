@@ -7,9 +7,11 @@ export default class Questions extends React.Component {
     super(props);
     this.questionNum = 3;
     this.state = {
+      questionNo1AnsweredFlg: false,
+      questionNo2AnsweredFlg: false,
+      questionNo3AnsweredFlg: false,
       displayQuestions: [
         {
-          answerFlg: false,
           option: [
             { radioName: 'yes-radio-Q1', radioValue: 'はい', selected: false },
             { radioName: 'no-radio-Q1', radioValue: 'いいえ', selected: false }
@@ -25,60 +27,59 @@ export default class Questions extends React.Component {
   *  ・次のアンケートを表示
   */
   changeRadioBtn = (e) => {
+    const choicedRadioId = e.target.id;
     const choicedRadioName = e.target.name;
     const choicedRadioValue = e.target.value;
 
-    const copy_displayQuestions = this.state.displayQuestions.slice();
+    const copyDisplayQuestions = this.state.displayQuestions.slice();
+
+    // ラジオボタンが押下されたことをstateに保存
+    if (Number(choicedRadioId) === 1) {
+      this.state.questionNo1AnsweredFlg = true;
+    } else if (Number(choicedRadioId) === 2) {
+      this.state.questionNo2AnsweredFlg = true;
+    } else if (Number(choicedRadioId) === 3) {
+      this.state.questionNo3AnsweredFlg = true;
+    }
 
     // チェックされたラジオボタンのstateを記録
-    copy_displayQuestions.forEach(cp_displayQuestion => {
-      for (let index = 0; index < cp_displayQuestion.option.length; index++) {
+    copyDisplayQuestions.forEach(cpDisplayQuestion => {
+      for (let index = 0; index < cpDisplayQuestion.option.length; index++) {
         // どのアンケートのラジオボタンが押されたかを判定
-        if (choicedRadioName === cp_displayQuestion.option[index].radioName) {
-          // 回答済みフラグを立てる
-          cp_displayQuestion.answerFlg = true;
+        if (choicedRadioName === cpDisplayQuestion.option[index].radioName) {
           // ラジオボタンの選択切替
           if (choicedRadioValue === 'はい') {
-            cp_displayQuestion.option[0].selected = true;
-            cp_displayQuestion.option[1].selected = false;
+            cpDisplayQuestion.option[0].selected = true;
+            cpDisplayQuestion.option[1].selected = false;
           } else if (choicedRadioValue === 'いいえ') {
-            cp_displayQuestion.option[0].selected = false;
-            cp_displayQuestion.option[1].selected = true;
+            cpDisplayQuestion.option[0].selected = false;
+            cpDisplayQuestion.option[1].selected = true;
           }
         }
       }
     });
 
-    let add_displayQuestions = [];
-    const nextQuestionNumber = copy_displayQuestions.length + 1;
+    let addDisplayQuestions = [];
+    const nextQuestionNumber = copyDisplayQuestions.length + 1;
+    // 最後に表示されたアンケートのラジオボタンが押下された場合 かつ
     // クラス変数-questionNumで設定したアンケート数より少ない場合、アンケート追加
-    if (copy_displayQuestions.length < this.questionNum) {
-      add_displayQuestions = [{
-        answerFlg: false,
+    if (copyDisplayQuestions.length === Number(choicedRadioId)
+      && copyDisplayQuestions.length < this.questionNum) {
+      addDisplayQuestions = [{
         option: [
           { radioName: `yes-radio-Q${nextQuestionNumber}`, radioValue: 'はい', selected: false },
           { radioName: `no-radio-Q${nextQuestionNumber}`, radioValue: 'いいえ', selected: false }
         ]
       }];
     }
-    const displayQuestions = [...copy_displayQuestions, ...add_displayQuestions]
+    const displayQuestions = [...copyDisplayQuestions, ...addDisplayQuestions]
     this.setState({ displayQuestions });
   }
 
   render() {
+    const questionNo1AnsweredFlg = this.state.questionNo1AnsweredFlg;
+    const questionNo2AnsweredFlg = this.state.questionNo2AnsweredFlg;
     const displayQuestions = this.state.displayQuestions;
-    // アンケート回答フラグ(回答済：true)
-    // 回答済みの場合、次のアンケート文を表示する
-    let answerFlg_1 = false;
-    let answerFlg_2 = false;
-    for (let i = 0; i < displayQuestions.length; i++) {
-      if (i === 0) {
-        answerFlg_1 = displayQuestions[i].answerFlg;
-      } else if (i === 1) {
-        answerFlg_2 = displayQuestions[i].answerFlg;
-      }
-    }
-
     return (
       <div>
         <TitleArea stepNumber="STEP2" titleText="以下にお答えください" />
@@ -90,11 +91,11 @@ export default class Questions extends React.Component {
                 <p key={i}>現在、生命保険に加入されていますか？</p>
               }
               {/* アンケート１が回答済 */}
-              {i === 1 && answerFlg_1 && (
+              {i === 1 && questionNo1AnsweredFlg && (
                 <p key={i}>現在入院中ですか。または、最近３カ月以内に医師の診察・検査の結果、入院・手術をすすめられたことはありますか？</p>
               )}
               {/* アンケート２が回答済 */}
-              {i === 2 && answerFlg_2 &&(
+              {i === 2 && questionNo2AnsweredFlg && (
                 <p key={i}>過去５年以内に病気や怪我で、手術を受けたことまたは継続して７日以上の入院をしたことがありますか？</p>
               )}
 
