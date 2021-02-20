@@ -4,6 +4,7 @@ import TitleArea from "../components/TitleArea";
 import { useDispatch, useSelector } from "react-redux";
 import { pushQuestionsNextAction } from '../reducks/answers/actions'
 import { QuestionNo1, QuestionNo2, QuestionNo3 } from '../define/QuestrionText'
+import 'bulma/css/bulma.css'
 
 export default function Questions() {
   const dispatch = useDispatch();
@@ -136,9 +137,9 @@ export default function Questions() {
           </div>
         })
       }
-      <Link to="/"><button>前へ戻る</button></Link>
+      <Link to="/"><button class="button is-primary">前へ戻る</button></Link>
       <Link to="/Consultation">
-        <button onClick={() => dispatch(pushQuestionsNextAction({
+        <button class="button is-primary" onClick={() => dispatch(pushQuestionsNextAction({
           answerNo1: answerNo1,
           answerNo2: answerNo2,
           answerNo3: answerNo3

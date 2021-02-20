@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import createStore from './js/reducks/store/store'
-import './index.css';
 import App from './App';
+import Header from './js/components/Header'
 import reportWebVitals from './reportWebVitals';
+import 'bulma/css/bulma.css'
 
 // storeとReactアプリの接続
 export const store = createStore(); //ここでstoreが作られる
@@ -18,6 +19,7 @@ export const store = createStore(); //ここでstoreが作られる
 // connect関数：ReactとReduxを接続してstoreを変更できるようにする。
 ReactDOM.render(
   <Provider store={store} >
+    <Header />
     <App />
   </Provider>,
   document.getElementById('root')

@@ -3,6 +3,7 @@ import TitleArea from "../components/TitleArea";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { pushConsultationsNextAction } from '../reducks/consultations/actions'
+import 'bulma/css/bulma.css'
 
 export default function Consultation() {
   const dispatch = useDispatch();
@@ -25,9 +26,9 @@ export default function Consultation() {
         {consultaionContent}
       </textarea>
       <div>
-        <Link to="/Questions"><button>前へ戻る</button></Link>
+        <Link to="/Questions"><button class="button is-primary">前へ戻る</button></Link>
         <Link to="/Confirmation">
-          <button onClick={() => dispatch(pushConsultationsNextAction({
+          <button class="button is-primary" onClick={() => dispatch(pushConsultationsNextAction({
             content: consultaionContent
           }))}>次へ進む</button>
         </Link>

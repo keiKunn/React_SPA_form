@@ -3,6 +3,7 @@ import TitleArea from "../components/TitleArea";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { QuestionNo1, QuestionNo2, QuestionNo3 } from '../define/QuestrionText'
+import 'bulma/css/bulma.css'
 
 export default function Confirmation() {
   const dispatch = useDispatch();
@@ -52,8 +53,8 @@ export default function Confirmation() {
         -- ご相談内容 --
         <p>{consultaionContent}</p>
       </div>
-      <Link to="/Consultation"><button>前へ戻る</button></Link>　
-      <button >送信</button>
+      <Link to="/Consultation"><button class="button is-primary">前へ戻る</button></Link>　
+      <button class="button is-primary">送信</button>
     </div>
   );
 }
